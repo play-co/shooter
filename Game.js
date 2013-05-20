@@ -17,11 +17,10 @@ exports = Class(Emitter, function (supr) {
 
 		this._inputLayer = new InputView({
 			superview: opts.superview,
-			x: opts.x,
-			y: opts.y,
-			width: opts.width,
-			height: opts.height,
-			visible: false,
+			x: opts.x || 0,
+			y: opts.y || 0,
+			width: opts.width || GC.app.baseWidth,
+			height: opts.height || GC.app.baseHeight,
 			zIndex: 5
 		});
 	};

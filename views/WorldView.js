@@ -2,7 +2,7 @@ import ui.View as View;
 
 import src.lib.ViewPool as ViewPool;
 
-import src.shooter.particle.ParticleSystem as ParticleSystem;
+import shooter.particle.ParticleSystem as ParticleSystem;
 
 exports = Class(View, function (supr) {
 	this.init = function (opts) {
@@ -17,7 +17,7 @@ exports = Class(View, function (supr) {
 	this.reset = function () {
 		for (var i in this._particleSystem) {
 			this._particleSystem[i].releaseAllViews();
-		}		
+		}
 	};
 
 	this.obtainView = function (opts) {
@@ -62,7 +62,6 @@ exports = Class(View, function (supr) {
 		}
 	};
 
-
 	this.update = function (dt) {
 		for (var i in this._particleSystem) {
 			var particleSystem = this._particleSystem[i];
@@ -70,7 +69,7 @@ exports = Class(View, function (supr) {
 		}
 	};
 
-	this.createLayer = function (tag, superview) {
+	this.createLayer = function (tag, superview, blockEvents) {
 		return new View({
 			superview: superview || this,
 			x: 0,
@@ -78,7 +77,7 @@ exports = Class(View, function (supr) {
 			width: this.style.width,
 			height: this.style.height,
 			tag: tag,
-			blockEvents: true
+			blockEvents: (blockEvents === undefined) ? true : blockEvents
 		});
 	};
 });

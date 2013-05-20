@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with the Game Closure SDK.  If not, see <http://www.gnu.org/licenses/>.
  */
-import src.shooter.models.EntityModel as EntityModel;
+import shooter.models.EntityModel as EntityModel;
 
 exports = Class(EntityModel, function (supr) {
 	this.init = function (opts) {
@@ -33,7 +33,6 @@ exports = Class(EntityModel, function (supr) {
 
 	this.setHealth = function (health) {
 		this._health = health;
-		this._hpRatio = this._health / this._opts.health;
 	};
 
 	this.getHealth = function () {
@@ -42,7 +41,7 @@ exports = Class(EntityModel, function (supr) {
 
 	this.subHealth = function (health) {
 		this._health -= health;
-		this._hpRatio = this._health / this._opts.health;
+
 		return (health < 0);
 	};
 });

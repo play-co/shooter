@@ -62,13 +62,11 @@ exports = Class(View, function (supr) {
 			var data = this._chars[character];
 			if (data) {
 				var w = data.width * scale;
-				if (data) {
-					activeCharacters[i] = data;
-					textWidth += w + this.spacing * scale;
-					// Special x offsets to fix text kerning only affect text width if it's first or last char
-					if (data.offset && (i == 0 || i == text.length - 1)) {
-						textWidth += data.offset * scale;
-					}
+				activeCharacters[i] = data;
+				textWidth += w + this.spacing * scale;
+				// Special x offsets to fix text kerning only affect text width if it's first or last char
+				if (data.offset && (i == 0 || i == text.length - 1)) {
+					textWidth += data.offset * scale;
 				}
 			}
 			i++;
@@ -106,28 +104,30 @@ exports = Class(View, function (supr) {
 		var y = 0;
 		for (i = 0, j = activeCharacters.length; i < j; i++) {
 			var data = activeCharacters[i];
-			var view = imageViews[i];
-			var viewStyle = view.style;
-			var w = data.width * scale;
+			if (data) {
+				var view = imageViews[i];
+				var viewStyle = view.style;
+				var w = data.width * scale;
 
-			// Special x offsets to fix text kerning
-			if (data.offset) {
-				x += data.offset * scale;
+				// Special x offsets to fix text kerning
+				if (data.offset) {
+					x += data.offset * scale;
+				}
+
+				viewStyle.x = x;
+				viewStyle.y = y;
+				viewStyle.width = w;
+				viewStyle.height = style.height; // All characters should have the same height
+				viewStyle.visible = true;
+				view.setImage(data.img);
+
+				// Remove special offset
+				if (data.offset) {
+					x -= data.offset * scale;
+				}
+
+				x += w + this.spacing * scale;
 			}
-
-			viewStyle.x = x;
-			viewStyle.y = y;
-			viewStyle.width = w;
-			viewStyle.height = style.height; // All characters should have the same height
-			viewStyle.visible = true;
-			view.setImage(data.img);
-
-			// Remove special offset
-			if (data.offset) {
-				x -= data.offset * scale;
-			}
-
-			x += w + this.spacing * scale;
 		}
 
 		while (i < imageViews.length) {

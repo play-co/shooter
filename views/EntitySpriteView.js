@@ -21,7 +21,7 @@ import math.geom.Rect as Rect;
 
 import ui.SpriteView as SpriteView;
 
-import src.constants.debugConstants as debugConstants;
+var debugConstants = {};
 
 exports = Class(SpriteView, function (supr) {
 	this.init = function (opts) {
@@ -104,3 +104,7 @@ exports = Class(SpriteView, function (supr) {
 		};
 	}
 });
+
+exports.setDebugConstants = function (d) {
+	debugConstants = d;
+};

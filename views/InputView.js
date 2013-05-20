@@ -17,25 +17,25 @@
  */
 import ui.View as View;
 
-import src.constants.gameConstants as gameConstants;
-import src.constants.debugConstants as debugConstants;
-
 import math.geom.Vec2D as Vec2D;
 
 exports = Class(View, function (supr) {
 	this.init = function (opts) {
 		opts.blockEvents = false;
+
 		supr(this, 'init', [opts]);
+
+		this._dragMagnitude = opts.dragMagnitude || 150;
+		this._dragTime = opts.dragTime || 250;
+
+		this._allowDrag = true;
 	};
 
 	this.onInputStart = function (evt) {
 		this.emit('Click', {x: evt.srcPt.x / GC.app.scale, y: evt.srcPt.y / GC.app.scale})
 
-		this._allowDrag = true; // (evt.srcPt.y / GC.app.scale < GC.app.baseHeight - gameConstants.FOOTER_HEIGHT);
-		if (this._allowDrag) {
-			this.startDrag();
-			this.emit('Start', evt);
-		}
+		this.startDrag();
+		this.emit('Start', evt);
 	};
 
 	this.onDragStart = function (dragEvent) {
@@ -65,8 +65,7 @@ exports = Class(View, function (supr) {
 			var mag = dragVec.getMagnitude();
 			var dt = Date.now() - this._dragStartTime;
 
-			var dragTime = Math.max(gameConstants.MAX_DRAG_TIME, debugConstants.MAX_DRAG_TIME);
-			if ((mag > gameConstants.MIN_DRAG_MAGNITUDE) && (dt < dragTime)) {
+			if ((mag > this._dragMagnitude) && (dt < this._dragTime)) {
 				var angle = dragVec.getAngle();
 				var degrees = angle * (180 / Math.PI);
 				var isUp = degrees > 60 && degrees < 120;
