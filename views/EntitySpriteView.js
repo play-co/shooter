@@ -21,8 +21,6 @@ import math.geom.Rect as Rect;
 
 import ui.SpriteView as SpriteView;
 
-var debugConstants = {};
-
 exports = Class(SpriteView, function (supr) {
 	this.init = function (opts) {
 		supr(this, 'init', arguments);
@@ -32,6 +30,10 @@ exports = Class(SpriteView, function (supr) {
 
 		this.style.x = opts.x || 0;
 		this.style.y = opts.y || 0;
+
+		if (opts.showCollision) {
+			this.render = this._renderCollision;
+		}
 	};
 
 	this.setSize = function (width, height) {
@@ -62,49 +64,43 @@ exports = Class(SpriteView, function (supr) {
 		}
 	};
 
-	if (debugConstants.showCollision) {
-		this.render = function (ctx) {
-			supr(this, 'render', arguments);
+	this._renderCollision = function (ctx) {		
+		supr(this, 'render', arguments);
 
-			var style = this.style;
-			var modelOpts = this._modelOpts;
+		var style = this.style;
+		var modelOpts = this._modelOpts;
 
-			if (modelOpts) {
-				var shape = modelOpts.shape;
-				if (shape instanceof Circle) {
-					ctx.beginPath();
-					ctx.arc(-this._offsetX + shape.x, -this._offsetY + shape.y, shape.radius, 0, Math.PI * 2, false);
-					ctx.closePath();
+		if (modelOpts) {
+			var shape = modelOpts.shape;
+			if (shape instanceof Circle) {
+				ctx.beginPath();
+				ctx.arc(-this._offsetX + shape.x, -this._offsetY + shape.y, shape.radius, 0, Math.PI * 2, false);
+				ctx.closePath();
 
-					ctx.fillStyle = modelOpts.color || 'rgba(255, 0, 0, 0.7)';
-					ctx.fill();
+				ctx.fillStyle = modelOpts.color || 'rgba(255, 0, 0, 0.7)';
+				ctx.fill();
 
-					ctx.lineWidth = 3;
-					ctx.strokeStyle = '#FFFFFF';
-					ctx.stroke();
-				} else if (shape instanceof Rect) {
-					ctx.fillStyle = modelOpts.color || 'rgba(255, 0, 0, 0.7)';
-					ctx.fillRect(
-						-this._offsetX - shape.width * 0.5 + shape.x,
-						-this._offsetY - shape.height * 0.5 + shape.y,
-						shape.width,
-						shape.height
-					);
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = '#FFFFFF';
+				ctx.stroke();
+			} else if (shape instanceof Rect) {
+				ctx.fillStyle = modelOpts.color || 'rgba(255, 0, 0, 0.7)';
+				ctx.fillRect(
+					-this._offsetX - shape.width * 0.5 + shape.x,
+					-this._offsetY - shape.height * 0.5 + shape.y,
+					shape.width,
+					shape.height
+				);
 
-					ctx.lineWidth = 3;
-					ctx.strokeStyle = '#FFFFFF';
-					ctx.strokeRect(
-						-this._offsetX - shape.width * 0.5 + shape.x,
-						-this._offsetY - shape.height * 0.5 + shape.y,
-						shape.width,
-						shape.height
-					);
-				}
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = '#FFFFFF';
+				ctx.strokeRect(
+					-this._offsetX - shape.width * 0.5 + shape.x,
+					-this._offsetY - shape.height * 0.5 + shape.y,
+					shape.width,
+					shape.height
+				);
 			}
-		};
-	}
+		}
+	};
 });
-
-exports.setDebugConstants = function (d) {
-	debugConstants = d;
-};

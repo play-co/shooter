@@ -41,6 +41,21 @@ exports = Class(Emitter, function (supr) {
 			}
 		);
 
+		if (!('width' in opts)) {
+			if (opts.shape instanceof Circle) {
+				opts.width = opts.shape.radius * 2;
+			} else if (opts.shape instanceof Rect) {
+				opts.width = opts.shape.width;
+			}
+		}
+		if (!('height' in opts)) {
+			if (opts.shape instanceof Circle) {
+				opts.height = opts.shape.radius * 2;
+			} else if (opts.shape instanceof Rect) {
+				opts.height = opts.shape.height;
+			}
+		}
+
 		this._opts = opts;
 		this._game = opts.game;
 
@@ -76,7 +91,8 @@ exports = Class(Emitter, function (supr) {
 	};
 
 	this.isOffscreen = function () {
-		return this._opts.pos.y > GC.app.baseHeight + this._opts.height;
+		return (this._opts.pos.y < -this._opts.height) ||
+				(this._opts.pos.y > GC.app.baseHeight + this._opts.height);
 	};
 
 	this.tick = function (dt) {
@@ -179,7 +195,6 @@ exports = Class(Emitter, function (supr) {
 
 	this.collidesWithModelPool = function (modelPool) {
 		var shape = this.getShape();
-
 		return (shape instanceof Circle) ?
 				this._collidesWithModelPool(modelPool, circleAndCircle, intersect.circleAndRect) :
 				this._collidesWithModelPool(modelPool, intersect.rectAndCircle, intersect.rectAndRect);

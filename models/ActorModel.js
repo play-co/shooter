@@ -20,7 +20,6 @@ import shooter.models.EntityModel as EntityModel;
 exports = Class(EntityModel, function (supr) {
 	this.init = function (opts) {
 		supr(this, 'init', [opts]);
-		this._hpRatio = 1;
 	};
 
 	this.refreshOpts = function () {

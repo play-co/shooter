@@ -42,7 +42,7 @@ exports = Class(Emitter, function (supr) {
 	this.addItemSpawner = function (itemSpawner, modelPool) {
 		itemSpawner.on('ItemSpawned', bind(this, 'onItemSpawned'));
 
-		if (modelPool) {
+		if (modelPool !== undefined) {
 			this._modelPools[modelPool] = itemSpawner;
 		}
 
