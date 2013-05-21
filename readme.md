@@ -7,7 +7,9 @@ If you want to get going as fast as possible then you can create a new project w
 and replace the contents of the `Application.js` of your new project with the contents of the `Application.js`
 file in this repo.
 
-### EntityModel
+### EntityModel Class
+
+extends `Emitter`, see: [event.Emitter](http://docs.gameclosure.com/api/event.html#class-event.emitter)
 
 The `EntityModel` contains properties about the position and shape of an item. Is has a number of 
 methods which are used to create and destroy it.
@@ -41,12 +43,14 @@ __isOffscreen()__
 
 The tick function calls this function, if this function returns true then the model will be removed.
 
-__tick()__
+__tick(dt)__
 
 This function is called each frame by the `ModelPool`. If this function returns `true` then this model
 will be removed from the pool and the `destroy` function is called. The tick function emits an `Update`
 event with the `_opts` parameter which is used by the associated view to display the item.
 
+Paramters
+ + `dt {number}` ---The number of milli seconds elapsed since the last frame.
 Returns
  {boolean} ---If true then the model pool will remove this item.
 
@@ -88,3 +92,39 @@ Returns
 
 ### ActorModel Class
 
+extends `EntityModel`
+
+This class exposes `health` related functions which can be used to count the number of times
+an item has been hit by a projectile.
+
+#### Methods
+
+__tick(dt)__
+
+This function returns `true` if the health is less than zero or if the `isOffscreen` function returns `true`.
+
+Paramters
+ + `dt {number}` ---The number of milli seconds elapsed since the last frame.
+Returns
+ {boolean} ---If true then the model pool will remove this item.
+
+__setHealth(health)__
+
+Set the health of the item.
+
+Parameters
+ + `health {number}` ---The new health value.
+
+__getHealth()__
+
+Get the health of the item.
+
+Returns
+ {number} ---The health value
+
+__subHealth(health)__
+
+Remove health from the item.
+
+Returns
+ {boolean} ---True if the health is less than zero.

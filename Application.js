@@ -43,14 +43,7 @@ var EnemyModel = Class(ActorModel, function (supr) {
 	this.init = function (opts) {
 		supr(this, 'init', [merge(opts, { shape: new Rect(0, 0, 90, 90), velocity: new Point(0, 100)})]);
 	};
-
-	/**
-	 * This function returns true if the enemy is out of the screen or the health is less than zero.
-	 */
-	this.tick = function (dt) {
-		return (this._health < 0) || supr(this, 'tick', arguments);
-	};
-})
+});
 
 /**
  * Projectile model, a small box which moves from the player to the top of the screen.

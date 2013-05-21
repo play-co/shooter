@@ -19,7 +19,13 @@ import shooter.models.EntityModel as EntityModel;
 
 exports = Class(EntityModel, function (supr) {
 	this.init = function (opts) {
+		this._health = ('health' in opts) ? opts.health : 1;
+
 		supr(this, 'init', [opts]);
+	};
+
+	this.tick = function (dt) {
+		return (this._health < 0) || supr(this, 'tick', arguments);
 	};
 
 	this.refreshOpts = function () {
@@ -41,6 +47,6 @@ exports = Class(EntityModel, function (supr) {
 	this.subHealth = function (health) {
 		this._health -= health;
 
-		return (health < 0);
+		return (this._health < 0);
 	};
 });
