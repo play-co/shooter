@@ -25,9 +25,6 @@ import device;
 import math.geom.Point as Point;
 import math.geom.Rect as Rect;
 
-import ui.View as View;
-import ui.TextView as TextView;
-
 import shooter.Game as Game;
 import shooter.models.ModelPool as ModelPool;
 import shooter.models.ActorModel as ActorModel;

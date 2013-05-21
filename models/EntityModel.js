@@ -71,14 +71,14 @@ exports = Class(Emitter, function (supr) {
 	this.refreshOpts = function () {
 	};
 
-	this.updatePos = function (pt) {
+	this.updatePos = function (pos) {
 		var opts = this._opts;
 
 		if (opts.pos) {
-			opts.pos.x = pt.x;
-			opts.pos.y = pt.y;
+			opts.pos.x = pos.x;
+			opts.pos.y = pos.y;
 		} else {
-			opts.pos = new Point(pt.x, pt.y);
+			opts.pos = new Point(pos.x, pos.y);
 		}
 
 		opts.x = opts.pos.x;
@@ -141,18 +141,6 @@ exports = Class(Emitter, function (supr) {
 			this._opts = {};
 		}
 		return this._opts;
-	};
-
-	this.getHealth = function () {
-		return this._health;
-	};
-
-	this.subHealth = function (health) {
-		this._health -= health;
-	};
-
-	this.subLaserDT = function (dt) {
-		this._laserDT -= dt;
 	};
 
 	this.collidesWith = function (item) {
