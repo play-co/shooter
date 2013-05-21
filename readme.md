@@ -128,3 +128,58 @@ Remove health from the item.
 
 Returns
  {boolean} ---True if the health is less than zero.
+
+### ModelModel Class
+
+The `ModelPool` class contains a list of models. The tick function of all active models in this list 
+is called. If a tick function of a model returns `true` then the model is removed from the active 
+part of the list.
+
+This class is meant to be subclassed.
+
+Paramters
+ + `defaultOpts {object}` ---The default options which are passed to the constructor of a new model allocated in the pool.
+
+#### properties
+
+__length__
+
+The number of active items in the pool.
+
+#### methods
+
+__ _allocItem(ctor)__
+
+Allocate a new item, this function should be called from a subclass of this class.
+If there's a free item with the same constructor then that item will be returned,
+if an existing item of the given type can't be found then a new item will be created and
+added to the list.
+
+Parameters
+ + `ctor {Class}` ---The constructor for the item to allocate.
+Returns
+ {Class} ---An instance of the given type.
+
+__clear()__
+
+Remove all active items from the list.
+The destroy function of all items in the list is invoked which results in the associated views being released as well.
+
+__reset()__
+
+See `clear`.
+
+__tick(dt)__
+
+The tick function calls all active models in the pool. If the tick function of a model returns `true`
+then that model is removed from the active part of the list.
+
+Parameters
+ + `dt {number}` ---The number of milli seconds elapsed since the last frame.
+
+__getItems()__
+
+Get the items contained in the pool. These are all items, both active and inactive!
+
+Returns
+ {Array} ---A list of models.
