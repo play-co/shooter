@@ -85,3 +85,44 @@ __clear()__
 Deactivate all particles.
 
 #### Particle callbacks
+
+Every particle type can have several callbacks. The step callback is mandatory and 
+calculates the position for the particle. The other callbacks are optional.
+
+__initStartCB(start)__
+
+This callback is called when the start position of a particle is set.
+
+Parameters
+ + `start {object}` ---A point containing a `x` and `y` value.
+
+__initEndCB(start, end)__
+
+This callback is called when the end position of the particle is set.
+
+Parameters
+ + `start {object}` ---A point containing a `x` and `y` value.
+ + `end {object}` ---A point containing a `x` and `y` value.
+
+__initCB(view)__
+
+This callback is called when all initial values of the particle are set.
+The `view` parameter is of the `Particle` type which has a `getOpts` function to allow
+access to the internal `_opts` property of the view.
+
+Parameters
+ + `view {Particle}` ---The view used for the particle.
+
+__stepCB(view, opts, delta, s)__
+
+This callback is called each frame.
+
+Parameters
+ + `view {Particle}` ---The particle view.
+ + `opts {object}` ---The opts properties of the particle.
+ + `delta {number}` ---A value between 0 and 1.
+ + `step {number}` ---The number of seconds elapsed between the current and last frame.
+
+### Particle Class
+
+extends `ImageView`, see: [ui.ImageView](http://doc.gameclosure.com/api/ui-images.html#class-ui.imageview)

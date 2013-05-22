@@ -1,6 +1,6 @@
 ### EntitySpriteView Class
 
-extends `SpriteView`, see: [ui.SpriteView](http://docs.gameclosure.com/api/event.html#class-event.emitter)
+extends `SpriteView`, see: [ui.SpriteView](http://doc.gameclosure.com/api/ui-spriteview.html)
 
 The `EntitySpriteView` class can be used to as a view for the `EntityModel` class. It has methods
 for positioning and updating the view based on information from the model.
