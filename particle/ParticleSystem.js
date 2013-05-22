@@ -45,14 +45,11 @@ exports = Class(ViewPool, function (supr) {
 
 		if (this._types) {
 			for (var i in this._types) {
-				this._loadImages(this._types[i].images);
+				this._types[i].image = new Image({url: this._types[i].image});
 			}
 		} else {
-			this._loadImages(opts.images);
-		}
-		if (!this._types) {
 			this.activateType(opts);
-			this._images = opts.images;
+			this._image = opts.image;
 		}
 	};
 
@@ -77,18 +74,7 @@ exports = Class(ViewPool, function (supr) {
 		}
 	};
 
-	this._loadImages = function (list) {
-		var i = list.length;
-		while (i) {
-			i--;
-			if (typeof list[i] === 'string') {
-				list[i] = new Image({url: list[i]});
-			}
-		}
-	};
-
-	this.addOne = function (x, y, velocity, imageIndex) {
-		var images = this._images;
+	this.addOne = function (x, y, velocity) {
 		var radius = this._radius;
 		var size = this._size;
 		var duration = this._duration;
@@ -100,9 +86,7 @@ exports = Class(ViewPool, function (supr) {
 		var a = Math.sin(r) * radius;
 		var b = Math.cos(r) * radius;
 
-		view.setImage(images[imageIndex || 0]);
-		view.index = this._id;
-		view.imageIndex = imageIndex || 0;
+		view.setImage(this._image);
 
 		style.width = size;
 		style.height = size;
@@ -114,8 +98,8 @@ exports = Class(ViewPool, function (supr) {
 			start = {};
 			opts.start = start;
 		}
-		start.x = x;
-		start.y = y;
+		start.x = x - half;
+		start.y = y - half;
 		start.p = 1;
 		this._initStartCB && this._initStartCB(start);
 
@@ -124,8 +108,8 @@ exports = Class(ViewPool, function (supr) {
 			end = {};
 			opts.end = end;
 		}
-		end.x = x + a;
-		end.y = y + b;
+		end.x = x + a - half;
+		end.y = y + b - half;
 		end.p = 0;
 		this._initEndCB && this._initEndCB(start, end);
 
@@ -158,7 +142,6 @@ exports = Class(ViewPool, function (supr) {
 
 	// Count parameter changes the number of particles emitted (or well exceeds it)
 	this.addParticles = function (pos, velocity, count) {
-		var images = this._images;
 		var x = pos.x;
 		var y = pos.y;
 		var i = count || this._count;
@@ -169,14 +152,9 @@ exports = Class(ViewPool, function (supr) {
 			var r1 = Math.random();
 			var r2 = Math.random();
 
-			this._id++;
-
-			var j = images.length;
-			while (j) {
-				this._r1 = r1;
-				this._r2 = r2;
-				this.addOne(x, y, velocity, --j);
-			}
+			this._r1 = r1;
+			this._r2 = r2;
+			this.addOne(x, y, velocity);
 		}
 	};
 
@@ -194,7 +172,7 @@ exports = Class(ViewPool, function (supr) {
 		this._initStartCB = type.initStartCB || false;
 		this._stepCB = type.stepCB || false;
 
-		this._images = type.images;
+		this._image = type.image;
 	};
 
 	this.getCount = function () {

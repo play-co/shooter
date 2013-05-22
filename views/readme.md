@@ -83,3 +83,17 @@ __DragDown__
 
 Emitted when the user drags down.
 
+### WorldView Class
+
+#### Methods
+
+__reset()__
+__obtainView(opts)__
+__addViewPool(type, viewPoolOpts)__
+__getViewPools()__
+__addParticleSystem(type, particleSystemOpts)__
+__getParticleSystem(particleSystem)__
+__createParticles(particleSystem, particleType, pos, velocity, count)__
+__update(dt)__
+__createLayer(tag, superview, blockEvents)__
+
