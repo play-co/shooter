@@ -85,15 +85,84 @@ Emitted when the user drags down.
 
 ### WorldView Class
 
+The `WorldView` class is the superview for a view to contain all views in a game.
+It provides utility functions to manages views, particles and layers.
+
+This view blocks all input events so you need to use this in combination with an `InputView`.
+
 #### Methods
 
 __reset()__
+
+Clear all particles and views from the view pools.
+
 __obtainView(opts)__
+
+Obtain a view from a view pool. This function is used by the `Game` class to link a model
+from an object pool to a view in a view pool.
+
+Parameters
+ + `opts {object}` ---The properties of a model which should contain a type to indicate which view pool to uses.
+
 __addViewPool(type, viewPoolOpts)__
+
+Add a view pool. The type is the same type as described in `obtainView` and should match a model pool
+in the `Game` instantce.
+The `viewPoolOpts` are constructor parameters used for creating a new `ViewPool` instance.
+
+Parameters
+ + `type {number}` ---The identifier for this view pool, should match the id of a `ModelPool` instance in `Game`.
+ + `viewPoolOpts {object}` ---The constructor opts for a `ViewPool`.
+
 __getViewPools()__
+
+Get all the `ViewPool` instances.
+
+Returns
+ {Array} ---A list of all view pools.
+
 __addParticleSystem(type, particleSystemOpts)__
-__getParticleSystem(particleSystem)__
-__createParticles(particleSystem, particleType, pos, velocity, count)__
+
+You can create multiple particles systems which allows you to add particle systems to different -depth- layers of your game.
+The `update` function in this class updates all particle systems.
+
+Parameters
+ + `type {number|string}` ---The id for this particle system.
+
+__getParticleSystem(type)__
+
+Get a particle system.
+
+Parameters
+ + `type {number|string}` ---An id matching an existing particle system.
+
+Returns
+ {ParticleSystem} ---A particle system.
+
+__createParticles(type, particleType, pos, velocity, count)__
+
+Create particles.
+
+Parameters
+ + `type {number|string}` ---The id for the particle system to create particles in.
+ + `particleType {string}` ---The type of particles to create.
+ + `pos {object}` ---The position, `x` and `y`.
+ + `velocity {object}` ---Optional, velocity if the particles should all move.
+ + `count {number}` ---The number of particles to create.
+
 __update(dt)__
+
+Update all particle systems.
+
+Parameters
+ + `dt {number}` ---The number of milli seconds elapsed since the last fram.
+
 __createLayer(tag, superview, blockEvents)__
+
+Create a new layer with the size of the given superview.
+
+Parameters
+ + `tag {string}` ---The name of the layer which shows up in the inspector in the simulator screen.
+ + `superview {View}` ---The parent view of the layer.
+ + `blockEvents {boolean} = true` ---Should input events be blocked?
 

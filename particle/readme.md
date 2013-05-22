@@ -126,3 +126,12 @@ Parameters
 ### Particle Class
 
 extends `ImageView`, see: [ui.ImageView](http://doc.gameclosure.com/api/ui-images.html#class-ui.imageview)
+
+This class exposes the `_opts` property for use in the `initCB` callback.
+
+#### Methods
+
+__getOpts()__
+
+Returns
+ {object} ---The properties of the view.

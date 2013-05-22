@@ -18,6 +18,9 @@ exports = Class(View, function (supr) {
 		for (var i in this._particleSystem) {
 			this._particleSystem[i].releaseAllViews();
 		}
+		for (var i = 0; i < this._viewPools.length; i++) {
+			this._viewPools[i] && this._viewPools[i].releaseAllViews();
+		}
 	};
 
 	this.obtainView = function (opts) {
@@ -44,12 +47,12 @@ exports = Class(View, function (supr) {
 		this._particleSystem[type] = new ParticleSystem(particleSystemOpts);
 	};
 
-	this.getParticleSystem = function (particleSystem) {
-		return this._particleSystem[particleSystem];
+	this.getParticleSystem = function (type) {
+		return this._particleSystem[type];
 	};
 
-	this.createParticles = function (particleSystem, particleType, pos, velocity, count) {
-		particleSystem = this._particleSystem[particleSystem];
+	this.createParticles = function (type, particleType, pos, velocity, count) {
+		var particleSystem = this._particleSystem[type];
 		if (particleSystem) {
 			particleType && particleSystem.activateType(particleType);
 
