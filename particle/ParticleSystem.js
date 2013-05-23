@@ -201,7 +201,7 @@ exports = Class(ViewPool, function (supr) {
 			if (opts.dt > opts.duration) {
 				this.releaseView(view);
 			} else {
-				opts.stepCB(view, opts, opts.dt / opts.duration, t);
+				opts.stepCB && opts.stepCB(view, opts, opts.dt / opts.duration, t);
 			}
 		}
 	};
