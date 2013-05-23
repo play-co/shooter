@@ -49,7 +49,7 @@ exports = Class(View, function (supr) {
 	};
 
 	this.createParticles = function (type, particleType, pos, velocity, count) {
-		particleSystem = this._particleSystem[type];
+		var particleSystem = this._particleSystem[type];
 		if (particleSystem) {
 			particleType && particleSystem.activateType(particleType);
 

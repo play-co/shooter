@@ -31,9 +31,11 @@ exports = Class(Emitter, function (supr) {
 	/**
 	 * Find an item in the pool which is not used, if there are no free items then create a new item
 	 */
-	this._allocItem = function (ctor) {
+	this._allocItem = function (ctor, type) {
 		var found = false;
 		var itemsUsed = this._itemsUsed;
+
+		type = type || 0;
 
 		while (!found) {
 			if (itemsUsed >= this._items.length) {
@@ -56,7 +58,7 @@ exports = Class(Emitter, function (supr) {
 				this._items[this._items.length - 1] = temp;
 			} else {
 				var item = this._items[itemsUsed];
-				if (item instanceof ctor) {
+				if (item.type === type) {
 					// Make sure that the item is the last item in the list!
 					this._items[itemsUsed] = this._items[this._itemsUsed];
 					this._items[this._itemsUsed] = item;
@@ -66,6 +68,8 @@ exports = Class(Emitter, function (supr) {
 				}
 			}
 		}
+
+		item.type = type;
 
 		this._itemsUsed++;
 		return item;

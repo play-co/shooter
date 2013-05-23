@@ -139,15 +139,19 @@ The number of active items in the pool.
 
 #### methods
 
-__ _allocItem(ctor)__
+__ _allocItem(ctor, type)__
 
 Allocate a new item, this function should be called from a subclass of this class.
-If there's a free item with the same constructor then that item will be returned,
+If there's a free item with the same type then that item will be returned,
 if an existing item of the given type can't be found then a new item will be created and
 added to the list.
 
+Why not use `instanceof ctor` to figure out which type to allocate?
+Because subclasses will be mixed up...
+
 Parameters
  + `ctor {Class}` ---The constructor for the item to allocate.
+ + `type {number}` ---The type of item to allocate.
 Returns
  {Class} ---An instance of the given type.
 
