@@ -12,10 +12,12 @@ Parameters
   + `duration {number}` ---The lifetime in milli seconds for each particle.
   + `radius {number}` ---The radius of the particles emitted.
   + `image {string}` ---The image for the particle.
+  + `color {string}` ---Optional, the color for the particles.
   + `initStartCB {function(start)}` ---Called when the start position is set.
   + `initEndCB {function(start, end)}` ---Called when the end position is set.
   + `initCB {function(view)}` ---Called when a new particle is initialized.
   + `stepCB {function(view, opts, delta, s)}` ---A callback called for each step.
+  + `extnds {string}` ---Extend an particle type, should match a previously define type key.
 
 #### Methods
 

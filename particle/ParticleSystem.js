@@ -43,13 +43,10 @@ exports = Class(ViewPool, function (supr) {
 
 		this._updateExtends();
 
-		if (this._types) {
-			for (var i in this._types) {
+		for (var i in this._types) {
+			if (this._types[i].image) {
 				this._types[i].image = new Image({url: this._types[i].image});
 			}
-		} else {
-			this.activateType(opts);
-			this._image = opts.image;
 		}
 	};
 
@@ -92,6 +89,10 @@ exports = Class(ViewPool, function (supr) {
 		style.height = size;
 		style.anchorX = half;
 		style.anchorY = half;
+
+		if (this._color) {
+			style.backgroundColor = this._color;
+		}
 
 		var start = opts.start;
 		if (!start) {
@@ -166,6 +167,7 @@ exports = Class(ViewPool, function (supr) {
 		this._duration = type.duration;
 		this._count = type.count || 50;
 		this._size = type.size;
+		this._color = type.color;
 
 		this._initCB = type.initCB || false;
 		this._initEndCB = type.initEndCB || false;

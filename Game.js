@@ -74,12 +74,12 @@ exports = Class(Emitter, function (supr) {
 		this._paused = paused;
 	};
 
-	this.getParticleSystem = function (particleSystem) {
-		return this._worldView.getParticleSystem(particleSystem);
+	this.getParticleSystem = function (type) {
+		return this._worldView.getParticleSystem(type);
 	};
 
-	this.createParticles = function (particleSystem, particleType, pos, velocity, count) {
-		this._worldView.createParticles(particleSystem, particleType, pos, velocity, count);
+	this.createParticles = function (type, particleType, pos, velocity, count) {
+		this._worldView.createParticles(type, particleType, pos, velocity, count);
 	};
 
 	this.createParticle = function (pos, type) {

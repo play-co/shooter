@@ -31,6 +31,8 @@ import shooter.models.ActorModel as ActorModel;
 import shooter.views.WorldView as WorldView;
 import shooter.views.EntitySpriteView as EntitySpriteView;
 
+import shooter.particle.ParticleSystem as ParticleSystem;
+
 var showCollision = false;
 
 /**
@@ -41,7 +43,14 @@ var EnemyModel = Class(ActorModel, function (supr) {
 	 * Define the shape and the velocity of the enemies.
 	 */
 	this.init = function (opts) {
+		this._game = opts.game;
 		supr(this, 'init', [merge(opts, { shape: new Rect(0, 0, 90, 90), velocity: new Point(0, 100)})]);
+	};
+
+	this.tick = function (dt) {
+		var result = supr(this, 'tick', arguments);
+		(this._health < 0) && this._game.createParticles(0, 'explode', this._opts.pos);
+		return result;
 	};
 });
 
@@ -69,9 +78,13 @@ var ProjectileModel = Class(ActorModel, function (supr) {
 		// 0 -the enemy list- is the model pool against which the collision is checked.
 		var items = this._game.collidesWithPool(this, 0);
 		var i = items.length;
+
+		i && this._game.createParticles(0, 'hit', this._opts.pos);
+
 		while (i) {
 			items[--i].subHealth(1);
 		}
+
 		return items.length || supr(this, 'tick', arguments);
 	};
 })
@@ -164,7 +177,7 @@ var PlayerModel = Class(ActorModel, function (supr) {
 	/**
 	 * This function is called on touch or drag.
 	 */
-	this.onInput = function (event, pt) {
+	this.onInput = function (pt) {
 		this._targetPos = pt;
 	};
 
@@ -248,6 +261,42 @@ var MyWorldView = Class(WorldView, function (supr) {
 			backgroundColor: 'green',
 			showCollision: showCollision
 		});
+
+		var stepFunction = function (view, opts, d, dt) {
+				var style = view.style;
+				var start = opts.start;
+
+				style.x = start.x + opts.dx * d;
+				style.y = start.y + opts.dy * d;
+				style.opacity = 1 - d;
+				style.visible = true;
+			};
+
+		this.addParticleSystem(
+			0, // Type, used as the first parameted of the `createParticles` function.
+			{
+				superview: this,
+				initCount: 50,
+				types: {
+					hit: {
+						count: 4,
+						duration: 200,
+						radius: 100,
+						size: 30,
+						color: '#FFDD00',
+						stepCB: stepFunction
+					},
+					explode: {
+						count: 20,
+						duration: 300,
+						radius: 100,
+						size: 60,
+						color: '#FF0000',
+						stepCB: stepFunction
+					}
+				}
+			}
+		);
 	};
 });
 
@@ -258,7 +307,7 @@ var MyWorldView = Class(WorldView, function (supr) {
 var MyGame = Class(Game, function (supr) {
 	this.init = function (opts) {
 		opts.game = this;
-		opts.worldView = new MyWorldView(opts);
+		opts.worldView = this._worldView = new MyWorldView(opts);
 
 		supr(this, 'init', [opts]);
 
@@ -285,6 +334,7 @@ var MyGame = Class(Game, function (supr) {
 	this.tick = function (dt) {
 		this._enemySpawner.tick(dt);
 		this._playerModel.tick(dt);
+		this._worldView.update(dt);
 	};
 });
 
