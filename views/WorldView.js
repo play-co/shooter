@@ -18,9 +18,6 @@ exports = Class(View, function (supr) {
 		for (var i in this._particleSystem) {
 			this._particleSystem[i].releaseAllViews();
 		}
-		for (var i = 0; i < this._viewPools.length; i++) {
-			this._viewPools[i] && this._viewPools[i].releaseAllViews();
-		}
 	};
 
 	this.obtainView = function (opts) {

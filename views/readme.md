@@ -94,7 +94,7 @@ This view blocks all input events so you need to use this in combination with an
 
 __reset()__
 
-Clear all particles and views from the view pools.
+Resets all particle systems.
 
 __obtainView(opts)__
 
