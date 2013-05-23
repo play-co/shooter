@@ -85,15 +85,52 @@ Emitted when the user drags down.
 
 ### WorldView Class
 
+The `WorldView` class contains all game related views and utility functions for these views.
+
 #### Methods
 
 __reset()__
+
+Reset all particles systems.
+
 __obtainView(opts)__
+
+Obtain a view from a view pool. The `opts` object should contain a `type` field indicating from which
+view pool the view should be obtained.
+
+This function is used by the `Game` class to connect a model to a view. The call is made from `Game.onItemSpawned`.
+
+The `opts` parameter contain the model properties, a `releaseView` callback is attached to this object 
+which is called when to model is released from the model pool.
+
+Parameters
+ + `opts {object}` ---Properties from the model.
+
 __addViewPool(type, viewPoolOpts)__
+
+Add a view pool. The type should match a type id of a model pool.
+
+Parameters
+ + `type {number|string}` ---The id of the pool, should match the id of a model pool.
+ + `viewPoolOpts {object}` ---The constructor options of a view pool, see: [ViewPool](http://doc.gameclosure.com/api/ui-viewpool.html).
+
 __getViewPools()__
+
+Get a list of all view pools.
+
+Returns
+ {array} ---A list of view pools.
+
 __addParticleSystem(type, particleSystemOpts)__
+
+Add a particle system. This allows you to add particle systems to different layers in the game.
+
+Parameters
+ + `type {number|string}` ---The id for the particle system.
+ + `particleSystemOpts {object}` ---Constructor options for a new particle system, see: [ParticleSystem](https://github.com/gameclosure/shooter/tree/master/particle).
+
 __getParticleSystem(particleSystem)__
+
 __createParticles(particleSystem, particleType, pos, velocity, count)__
 __update(dt)__
 __createLayer(tag, superview, blockEvents)__
-

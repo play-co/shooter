@@ -44,12 +44,12 @@ exports = Class(View, function (supr) {
 		this._particleSystem[type] = new ParticleSystem(particleSystemOpts);
 	};
 
-	this.getParticleSystem = function (particleSystem) {
-		return this._particleSystem[particleSystem];
+	this.getParticleSystem = function (type) {
+		return this._particleSystem[type];
 	};
 
-	this.createParticles = function (particleSystem, particleType, pos, velocity, count) {
-		particleSystem = this._particleSystem[particleSystem];
+	this.createParticles = function (type, particleType, pos, velocity, count) {
+		particleSystem = this._particleSystem[type];
 		if (particleSystem) {
 			particleType && particleSystem.activateType(particleType);
 
