@@ -18,7 +18,7 @@
 import ui.ImageView as ImageView;
 import timestep.ui.resource.Image as Image;
 
-import src.lib.ViewPool as ViewPool;
+import ui.ViewPool as ViewPool;
 
 var Particle = Class(ImageView, function (supr) {
 	this.getOpts = function () {

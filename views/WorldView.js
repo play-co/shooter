@@ -1,6 +1,6 @@
 import ui.View as View;
 
-import src.lib.ViewPool as ViewPool;
+import ui.ViewPool as ViewPool;
 
 import shooter.particle.ParticleSystem as ParticleSystem;
 
