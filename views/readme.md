@@ -2,7 +2,7 @@
 
 extends `SpriteView`, see: [ui.SpriteView](http://doc.gameclosure.com/api/ui-spriteview.html)
 
-The `EntitySpriteView` class can be used to as a view for the `EntityModel` class. It has methods
+The `EntitySpriteView` class can be used as a view for the `EntityModel` class. It has methods
 for positioning and updating the view based on information from the model.
 
 Parameters
@@ -12,7 +12,7 @@ Parameters
 
 __setSize(width, height)__
 
-Set the size of the view, updates the offsets. When the view is displayed the position denotes the
+Sets the size of the view and updates the offsets. When the view is displayed the position denotes the
 center of the view.
 
 Parameters
@@ -21,11 +21,11 @@ Parameters
 
 __onUpdate(opts)__
 
-This when the model emits an `Update` signal this function should be subscribed to apply the 
+When the model emits an `Update` signal this function should be subscribed to apply the 
 model's data to the view.
 
 Paramaters
- + `opts {object}` ---The opts from the view, the position is stored here.
+ + `opts {object}` ---The opts from the view, including the position.
 
 __getCurrentAnimationName()__
 
@@ -36,7 +36,7 @@ Returns
 
 __play(animationName, opts)__
 
-Play an animation, doesn't do anything if the given animation is already playing.
+Play an animation. This doesn't do anything if the given animation is already playing.
 
 Parameters
  + `animationName {string}` ---The name of the animation
@@ -47,7 +47,7 @@ Parameters
 If you use an `InputView` then you can set the `blockEvents` property of all other views
 in the game to `false` which increases the performance.
 
-The `InputView` class does not have any relevant public functions but does emit usefull events.
+The `InputView` class does not have any relevant public functions but does emit useful events.
 
 #### Events
 
@@ -65,7 +65,7 @@ Emitted when the user clicks the view.
 
 __Move__
 
-Emitted when the user drag on the screen.
+Emitted when the user drags on the screen.
 
 Parameters
  + `pt {object}` ---The new drag position: x, y.
@@ -73,7 +73,7 @@ Parameters
 __Drag__
 
 Parameters
- + `angle {number}` ---The direction in which is dragged in radians.
+ + `angle {number}` ---The direction of the drag in radians.
 
 __DragUp__
 
@@ -85,16 +85,16 @@ Emitted when the user drags down.
 
 ### WorldView Class
 
-The `WorldView` class is the superview for a view to contain all views in a game.
-It provides utility functions to manages views, particles and layers.
+The `WorldView` class is the superview that contains all views in the game.
+It provides utility functions for managing views, particles and layers.
 
-This view blocks all input events so you need to use this in combination with an `InputView`.
+This view blocks all input events so you need to use it in combination with an `InputView`.
 
 #### Methods
 
 __reset()__
 
-Reset all particles systems.
+Reset all particle systems.
 
 __obtainView(opts)__
 
@@ -103,8 +103,8 @@ view pool the view should be obtained.
 
 This function is used by the `Game` class to connect a model to a view. The call is made from `Game.onItemSpawned`.
 
-The `opts` parameter contain the model properties, a `releaseView` callback is attached to this object 
-which is called when to model is released from the model pool.
+The `opts` parameter contains the model properties. A `releaseView` callback is attached to this object 
+which is called when the model is released from the model pool.
 
 Parameters
  + `opts {object}` ---Properties from the model.
@@ -112,7 +112,7 @@ Parameters
 __addViewPool(type, viewPoolOpts)__
 
 Add a view pool. The type is the same type as described in `obtainView` and should match a model pool
-in the `Game` instantce.
+in the `Game` instance.
 The `viewPoolOpts` are constructor parameters used for creating a new `ViewPool` instance.
 
 Parameters
@@ -128,7 +128,7 @@ Returns
 
 __addParticleSystem(type, particleSystemOpts)__
 
-You can create multiple particles systems which allows you to add particle systems to different -depth- layers of your game.
+You can create multiple particle systems which allows you to add particle systems to different -depth- layers of your game.
 The `update` function in this class updates all particle systems.
 
 Parameters
@@ -161,7 +161,7 @@ __update(dt)__
 Update all particle systems.
 
 Parameters
- + `dt {number}` ---The number of milli seconds elapsed since the last fram.
+ + `dt {number}` ---The number of milliseconds elapsed since the last frame.
 
 __createLayer(tag, superview, blockEvents)__
 

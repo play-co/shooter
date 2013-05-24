@@ -7,8 +7,8 @@ methods which are used to create and destroy it.
 
 Parameters
  + `shape {math.geom.Rect|math.geom.Circle} = Circle(0,0,10)` ---Optional, set the size and shape of the item see: [Circle](http://docs.gameclosure.com/api/math.html#class-math.geom.circle) or [Rect](http://docs.gameclosure.com/api/math.html#class-math.geom.rect).
- + `width {number}` ---Optional, is not provided then the width of the shape is used.
- + `height {number}` ---Optional, is not provided then the height of the shape is used.
+ + `width {number}` ---Optional, if not provided then the width of the shape is used.
+ + `height {number}` ---Optional, if not provided then the height of the shape is used.
  + `game {Game}` ---An instance the the `Game` class used to interact with other items in the game.
 
 #### Methods
@@ -27,12 +27,12 @@ Parameters
 
 __destroy()__
 
-This function is called when the `ModelPool` in which this item is contained removes the model, it also
+This function is called when the `ModelPool` in which this item is contained removes the model. It also
 releases the view from the `ViewPool` associated with this model.
 
 __isOffscreen()__
 
-The tick function calls this function, if this function returns true then the model will be removed.
+The tick function calls this function. If it returns true then the model will be removed.
 
 __tick(dt)__
 
@@ -41,13 +41,13 @@ will be removed from the pool and the `destroy` function is called. The tick fun
 event with the `_opts` parameter which is used by the associated view to display the item.
 
 Paramters
- + `dt {number}` ---The number of milli seconds elapsed since the last frame.
+ + `dt {number}` ---The number of milliseconds elapsed since the last frame.
 Returns
  {boolean} ---If true then the model pool will remove this item.
 
 __getShape()__
 
-Get the shape of the item, this is not a unique instance! This function is used for collision detection.
+Get the shape of the item, which is not a unique instance. This function is used for collision detection.
 
 __getPosition()__
 
@@ -70,11 +70,11 @@ Check if this item collides with another item.
 Parameters
  + `item {EntityModel}` ---The item to check the collision against.
 Returns
- {boolean} ---True is collides.
+ {boolean} ---True if it collides.
 
 __collidesWithModelPool(modelPool)__
 
-Check if this item collides with any of the items in the given model pool.
+Check if this item collides with any of the active items in the given model pool.
 
 Parameters
  + `modelPool {ModelPool}` ---The model pool to check against.
@@ -95,7 +95,7 @@ __tick(dt)__
 This function returns `true` if the health is less than zero or if the `isOffscreen` function returns `true`.
 
 Paramters
- + `dt {number}` ---The number of milli seconds elapsed since the last frame.
+ + `dt {number}` ---The number of milliseconds elapsed since the last frame.
 Returns
  {boolean} ---If true then the model pool will remove this item.
 
@@ -120,7 +120,7 @@ Remove health from the item.
 Returns
  {boolean} ---True if the health is less than zero.
 
-### ModelModel Class
+### ModelPool Class
 
 The `ModelPool` class contains a list of models. The tick function of all active models in this list 
 is called. If a tick function of a model returns `true` then the model is removed from the active 
@@ -139,11 +139,10 @@ The number of active items in the pool.
 
 #### methods
 
-__ _allocItem(ctor, type)__
+<b>_allocItem(ctor, type)</b>
 
-Allocate a new item, this function should be called from a subclass of this class.
-If there's a free item with the same type then that item will be returned,
-if an existing item of the given type can't be found then a new item will be created and
+Allocate a new item. This function should be called from a subclass of this class.
+If there's a free item with the same type then that item will be returned. If an existing item of the given type can't be found then a new item will be created and
 added to the list.
 
 Why not use `instanceof ctor` to figure out which type to allocate?
@@ -170,7 +169,7 @@ The tick function calls all active models in the pool. If the tick function of a
 then that model is removed from the active part of the list.
 
 Parameters
- + `dt {number}` ---The number of milli seconds elapsed since the last frame.
+ + `dt {number}` ---The number of milliseconds elapsed since the last frame.
 
 __getItems()__
 
