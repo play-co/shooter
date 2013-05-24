@@ -69,7 +69,6 @@ exports = Class(Emitter, function (supr) {
 	};
 
 	this.setPaused = function (paused) {
-		soundManager.play('uiPauseMenu');
 		this._worldView.setPaused(paused);
 		this._paused = paused;
 	};
