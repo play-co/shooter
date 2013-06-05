@@ -46,7 +46,7 @@ exports = Class(ViewPool, function (supr) {
 		for (var i in this._types) {
 			if (this._types[i].image) {
 				var image = this._types[i].image;
-				if (!(image instanceof Image)) {
+				if (typeof image === 'string') {
 					this._types[i].image = new Image({url: image});
 				}
 			}
