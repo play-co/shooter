@@ -110,13 +110,13 @@ exports = Class(Emitter, function (supr) {
 		var pos = this._opts.pos;
 		var shape = this._opts.shape;
 
-		if (shape instanceof Circle) {
+		if ('radius' in shape) {
 			this._collideCircle.x = shape.x + pos.x;
 			this._collideCircle.y = shape.y + pos.y;
 			this._collideCircle.radius = shape.radius;
 
 			return this._collideCircle;
-		} else if (shape instanceof Rect) { // It's a rectangle...
+		} else { // It's a rectangle...
 			this._collideRect.x = shape.x + pos.x - shape.width * 0.5;
 			this._collideRect.y = shape.y + pos.y - shape.height * 0.5;
 			this._collideRect.width = shape.width;
