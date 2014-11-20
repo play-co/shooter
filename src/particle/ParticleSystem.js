@@ -14,7 +14,7 @@
  * along with the Game Closure SDK.  If not, see <http://mozilla.org/MPL/2.0/>.
  */
 import ui.ImageView as ImageView;
-import timestep.ui.resource.Image as Image;
+import ui.resource.Image as Image;
 
 import ui.ViewPool as ViewPool;
 
